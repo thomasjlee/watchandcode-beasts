@@ -1,0 +1,157 @@
+<script src="simpleTest.js"></script>
+<script src="librarySystem.js"></script>
+
+<script>
+  tests({
+    'It should load a library without a dependencies array.': function () {
+      librarySystem('myApp', function () {
+        return 'myApp';
+      });
+
+      eq(librarySystem('myApp'), 'myApp');
+    },
+
+    'It should load a library with an empty dependencies array.': function () {
+      librarySystem('library', [], function () {
+        return 'library';
+      });
+
+      eq(librarySystem('library'), 'library');
+    },
+
+    'It should load a library with 0 dependencies.': function () {
+      librarySystem('anotherApp', [], function () {
+        return 'anotherApp';
+      });
+
+      eq(librarySystem('anotherApp'), 'anotherApp');
+    },
+
+    'It should load a library with 1 dependency.': function () {
+      librarySystem('dependency', [], function () {
+        return 'loaded dependency';
+      });
+
+      librarySystem('system', ['dependency'], function (dependency) {
+        return 'system with ' + dependency;
+      });
+
+      eq(librarySystem('system'), 'system with loaded dependency');
+    },
+
+    'It should allow a library with 1 dependency to be loaded out of order.': function () {
+      librarySystem('anotherSystem', ['anotherDependency'], function (anotherDependency) {
+        return 'another system with ' + anotherDependency;
+      });
+
+      librarySystem('anotherDependency', [], function () {
+        return 'another dependency';
+      });
+
+      eq(librarySystem('anotherSystem'), 'another system with another dependency');
+    },
+
+    'It should load a library with 2 dependencies.': function () {
+      librarySystem('name', [], function () {
+        return 'Gordon';
+      });
+
+      librarySystem('company', [], function () {
+        return 'Watch and Code';
+      });
+
+      librarySystem('gordonBlurb', ['name', 'company'], function (name, company) {
+        return name + ' works at ' + company;
+      });
+
+      eq(librarySystem('gordonBlurb'), 'Gordon works at Watch and Code');
+    },
+
+    'It should allow a library with 2 dependencies to be loaded out of order.': function () {
+      librarySystem('thomasBlurb', ['activity', 'language'], function (activity, language) {
+        return 'Thomas is ' + activity + ' ' + language;
+      });
+
+      librarySystem('activity', [], function () {
+        return 'learning';
+      });
+
+      librarySystem('language', [], function () {
+        return 'JavaScript';
+      });
+
+      eq(librarySystem('thomasBlurb'), 'Thomas is learning JavaScript');
+    },
+
+    'It should load a library with 3 dependencies.': function () {
+      librarySystem('breads', [], function () {
+        return {
+          wheat: 'wheat bread',
+          white: 'white bread'
+        };
+      });
+
+      librarySystem('fillings', [], function () {
+        return {
+          turkey: 'turkey',
+          portobello: 'portobello'
+        };
+      });
+
+      librarySystem('condiments', [], function () {
+        return {
+          ketchup: 'ketchup',
+          mayo: 'mayo'
+        };
+      });
+
+      librarySystem('terribleSandwichRecipe', ['breads', 'fillings', 'condiments'], function (breads, fillings, condiments) {
+        return 'Between two slices of ' + breads.white +
+          ', place your ' + fillings.portobello +
+          ' and slather on the ' + condiments.ketchup + '.'
+      });
+
+      eq(librarySystem('terribleSandwichRecipe'), 'Between two slices of white bread, place your portobello and slather on the ketchup.');
+    },
+
+    'It should allow a library with 3 dependencies to be loaded out of order.': function () {
+      librarySystem('foodBlogArticle', ['author', 'publicationDate', 'terribleSandwichRecipe'], function (author, publicationDate, terribleSandwichRecipe) {
+        return 'A Recipe For Disaster, written by ' + author + ' on ' + publicationDate + ': ' + terribleSandwichRecipe;
+      });
+
+      librarySystem('publicationDate', [], function () {
+        return '12/4/2017';
+      });
+
+      librarySystem('author', [], function () {
+        return 'Joe Schmoe';
+      });
+
+      eq(librarySystem('foodBlogArticle'), 'A Recipe For Disaster, written by Joe Schmoe on 12/4/2017: Between two slices of white bread, place your portobello and slather on the ketchup.');
+    },
+
+    'It should throw an error if not all dependencies are available.': function () {
+      librarySystem('coffeeOrder', ['coffee', 'price'], function (coffee, price) {
+        return coffee.latte + ': ' + price.latte.toString();
+      });
+
+      librarySystem('price', [], function () {
+        return {
+          latte: 4.99
+        };
+      });
+
+      var errorThrown = false;
+      var errorMessage;
+      try {
+        librarySystem('coffeeOrder');
+      } catch (e) {
+        errorMessage = e.message;
+        errorThrown = (e instanceof Error);
+      }
+      
+      eq(errorThrown, true);
+      eq(errorMessage, 'Dependencies not available: coffee');
+    }
+  });
+</script>

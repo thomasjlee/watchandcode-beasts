@@ -1,0 +1,61 @@
+<script src="simpleTest.js"></script>
+<script src="runWithDebugger.js"></script>
+<script>
+
+  tests({
+
+    'It successfully runs a callback that takes 0 arguments.': function() {
+      function sayHi() {
+        return 'hi!';
+      }
+      eq(runWithDebugger(sayHi), 'hi!');
+    },
+
+    'It takes an arguments array that is optional.': function() {
+      function sayHello(name) {
+        if (name) {
+          return 'Hello, ' + name + '!'; 
+        } else {
+          return 'Hello, world!';
+        }
+      }
+      eq(runWithDebugger(sayHello), 'Hello, world!');
+      eq(runWithDebugger(sayHello, ['Gordon']), 'Hello, Gordon!');
+    },
+
+    'It successfully runs a callback that takes 1 argument.': function() {
+      function sayHiTo(name) {
+        return 'hi ' + name;
+      }
+      eq(runWithDebugger(sayHiTo, ['thomas']), 'hi thomas');
+    },
+
+    'It successfully runs a callback that takes 2 arguments.': function() {
+      function sayFullName(first, last) {
+        return first + ' ' + last;
+      }
+      eq(runWithDebugger(sayFullName, ['thomas', 'lee']), 'thomas lee');
+    },
+
+    'It successfully runs a callback that takes 3 arguments.': function() {
+      function addThreeNums(a, b, c) {
+        return a + b + c;
+      }
+      eq(runWithDebugger(addThreeNums, [1, 2, 3]), 6);
+    },
+
+    'It successfully runs a callback that takes 10 arguments.': function() {
+      function multiplyTenNums(a, b, c, d, e, f, g, h, i, j) {
+        var product = 1;
+
+        for (var x = 0; x < arguments.length; x++) {
+          product *= arguments[x];
+        }
+
+        return product;
+      }
+      eq(runWithDebugger(multiplyTenNums, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 3628800);
+    } 
+  })
+
+</script>

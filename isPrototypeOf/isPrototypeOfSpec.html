@@ -1,0 +1,117 @@
+<script src="simpleTest.js"></script>
+<script src="isPrototypeOf.js"></script>
+
+<script>
+  tests({
+    'It should throw TypeError when prototypeObj is null or undefined.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      try {
+        isPrototypeOf(null, canine);
+      } catch (e) {
+        var errorName = e.name
+      }
+
+      eq(errorName, 'TypeError');
+
+      try {
+        isPrototypeOf(undefined, canine);
+      } catch (e) {
+        var errorName = e.name
+      }
+
+      eq(errorName, 'TypeError');
+    },
+
+    'It should return true when prototypeObj is Object.prototype, as long as object is not null or undefined.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      eq(isPrototypeOf(Object.prototype, canine), true);
+    },
+
+    'It should return false when object is null or undefined.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      eq(isPrototypeOf(canine, null), false);     
+      eq(isPrototypeOf(canine, undefined), false);     
+    },
+
+    'It should identify a direct prototype.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      var dog = Object.create(canine);
+      dog.name = 'dog';
+      eq(isPrototypeOf(canine, dog), true);
+    },
+
+    'It should identify a prototype one link removed.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      var dog = Object.create(canine);
+      dog.name = 'dog';
+      var poodle = Object.create(dog);
+      poodle.name = 'poodle';
+      eq(isPrototypeOf(canine, poodle), true);
+    },
+
+    'It should identify a prototype two links removed.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+
+      var dog = Object.create(canine);
+      dog.name = 'dog';
+      var poodle = Object.create(dog);
+      poodle.name = 'poodle';
+      var goldenDoodle = Object.create(poodle);
+      goldenDoodle.name = 'goldenDoodle';
+      eq(isPrototypeOf(canine, goldenDoodle), true);
+    },
+
+    'It should identify when two objects are unrelated by inheritance.': function () {
+      var canine = {
+        name: 'canine',
+        bark: function () {
+          return 'bark';
+        }
+      };
+      
+      var feline = {
+        name: 'feline',
+        purr: function () {
+          return 'purr';
+        }
+      };
+      
+      eq(isPrototypeOf(canine, feline), false);
+    },
+  });
+</script>
