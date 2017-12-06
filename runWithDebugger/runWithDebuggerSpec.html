@@ -8,7 +8,7 @@
       function sayHi() {
         return 'hi!';
       }
-      eq(runWithDebugger(sayHi), 'hi!');
+      assertStrictEquals(runWithDebugger(sayHi), 'hi!');
     },
 
     'It takes an arguments array that is optional.': function() {
@@ -19,29 +19,29 @@
           return 'Hello, world!';
         }
       }
-      eq(runWithDebugger(sayHello), 'Hello, world!');
-      eq(runWithDebugger(sayHello, ['Gordon']), 'Hello, Gordon!');
+      assertStrictEquals(runWithDebugger(sayHello), 'Hello, world!');
+      assertStrictEquals(runWithDebugger(sayHello, ['Gordon']), 'Hello, Gordon!');
     },
 
     'It successfully runs a callback that takes 1 argument.': function() {
       function sayHiTo(name) {
         return 'hi ' + name;
       }
-      eq(runWithDebugger(sayHiTo, ['thomas']), 'hi thomas');
+      assertStrictEquals(runWithDebugger(sayHiTo, ['thomas']), 'hi thomas');
     },
 
     'It successfully runs a callback that takes 2 arguments.': function() {
       function sayFullName(first, last) {
         return first + ' ' + last;
       }
-      eq(runWithDebugger(sayFullName, ['thomas', 'lee']), 'thomas lee');
+      assertStrictEquals(runWithDebugger(sayFullName, ['thomas', 'lee']), 'thomas lee');
     },
 
     'It successfully runs a callback that takes 3 arguments.': function() {
       function addThreeNums(a, b, c) {
         return a + b + c;
       }
-      eq(runWithDebugger(addThreeNums, [1, 2, 3]), 6);
+      assertStrictEquals(runWithDebugger(addThreeNums, [1, 2, 3]), 6);
     },
 
     'It successfully runs a callback that takes 10 arguments.': function() {
@@ -54,7 +54,7 @@
 
         return product;
       }
-      eq(runWithDebugger(multiplyTenNums, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 3628800);
+      assertStrictEquals(runWithDebugger(multiplyTenNums, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), 3628800);
     } 
   })
 

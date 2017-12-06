@@ -8,7 +8,7 @@
         return 'myApp';
       });
 
-      eq(librarySystem('myApp'), 'myApp');
+      assertStrictEquals(librarySystem('myApp'), 'myApp');
     },
 
     'It should load a library with an empty dependencies array.': function () {
@@ -16,7 +16,7 @@
         return 'library';
       });
 
-      eq(librarySystem('library'), 'library');
+      assertStrictEquals(librarySystem('library'), 'library');
     },
 
     'It should load a library with 0 dependencies.': function () {
@@ -24,7 +24,7 @@
         return 'anotherApp';
       });
 
-      eq(librarySystem('anotherApp'), 'anotherApp');
+      assertStrictEquals(librarySystem('anotherApp'), 'anotherApp');
     },
 
     'It should load a library with 1 dependency.': function () {
@@ -36,7 +36,7 @@
         return 'system with ' + dependency;
       });
 
-      eq(librarySystem('system'), 'system with loaded dependency');
+      assertStrictEquals(librarySystem('system'), 'system with loaded dependency');
     },
 
     'It should allow a library with 1 dependency to be loaded out of order.': function () {
@@ -48,7 +48,7 @@
         return 'another dependency';
       });
 
-      eq(librarySystem('anotherSystem'), 'another system with another dependency');
+      assertStrictEquals(librarySystem('anotherSystem'), 'another system with another dependency');
     },
 
     'It should load a library with 2 dependencies.': function () {
@@ -64,7 +64,7 @@
         return name + ' works at ' + company;
       });
 
-      eq(librarySystem('gordonBlurb'), 'Gordon works at Watch and Code');
+      assertStrictEquals(librarySystem('gordonBlurb'), 'Gordon works at Watch and Code');
     },
 
     'It should allow a library with 2 dependencies to be loaded out of order.': function () {
@@ -80,7 +80,7 @@
         return 'JavaScript';
       });
 
-      eq(librarySystem('thomasBlurb'), 'Thomas is learning JavaScript');
+      assertStrictEquals(librarySystem('thomasBlurb'), 'Thomas is learning JavaScript');
     },
 
     'It should load a library with 3 dependencies.': function () {
@@ -111,7 +111,7 @@
           ' and slather on the ' + condiments.ketchup + '.'
       });
 
-      eq(librarySystem('terribleSandwichRecipe'), 'Between two slices of white bread, place your portobello and slather on the ketchup.');
+      assertStrictEquals(librarySystem('terribleSandwichRecipe'), 'Between two slices of white bread, place your portobello and slather on the ketchup.');
     },
 
     'It should allow a library with 3 dependencies to be loaded out of order.': function () {
@@ -127,7 +127,7 @@
         return 'Joe Schmoe';
       });
 
-      eq(librarySystem('foodBlogArticle'), 'A Recipe For Disaster, written by Joe Schmoe on 12/4/2017: Between two slices of white bread, place your portobello and slather on the ketchup.');
+      assertStrictEquals(librarySystem('foodBlogArticle'), 'A Recipe For Disaster, written by Joe Schmoe on 12/4/2017: Between two slices of white bread, place your portobello and slather on the ketchup.');
     },
 
     'It should throw an error if not all dependencies are available.': function () {
@@ -150,8 +150,8 @@
         errorThrown = (e instanceof Error);
       }
       
-      eq(errorThrown, true);
-      eq(errorMessage, 'Dependencies not available: coffee');
+      assertStrictEquals(errorThrown, true);
+      assertStrictEquals(errorMessage, 'Dependencies not available: coffee');
     }
   });
 </script>

@@ -17,7 +17,7 @@
         var errorName = e.name
       }
 
-      eq(errorName, 'TypeError');
+      assertStrictEquals(errorName, 'TypeError');
 
       try {
         isPrototypeOf(undefined, canine);
@@ -25,7 +25,7 @@
         var errorName = e.name
       }
 
-      eq(errorName, 'TypeError');
+      assertStrictEquals(errorName, 'TypeError');
     },
 
     'It should return true when prototypeObj is Object.prototype, as long as object is not null or undefined.': function () {
@@ -36,7 +36,7 @@
         }
       };
 
-      eq(isPrototypeOf(Object.prototype, canine), true);
+      assertStrictEquals(isPrototypeOf(Object.prototype, canine), true);
     },
 
     'It should return false when object is null or undefined.': function () {
@@ -47,8 +47,8 @@
         }
       };
 
-      eq(isPrototypeOf(canine, null), false);     
-      eq(isPrototypeOf(canine, undefined), false);     
+      assertStrictEquals(isPrototypeOf(canine, null), false);     
+      assertStrictEquals(isPrototypeOf(canine, undefined), false);     
     },
 
     'It should identify a direct prototype.': function () {
@@ -61,7 +61,7 @@
 
       var dog = Object.create(canine);
       dog.name = 'dog';
-      eq(isPrototypeOf(canine, dog), true);
+      assertStrictEquals(isPrototypeOf(canine, dog), true);
     },
 
     'It should identify a prototype one link removed.': function () {
@@ -76,7 +76,7 @@
       dog.name = 'dog';
       var poodle = Object.create(dog);
       poodle.name = 'poodle';
-      eq(isPrototypeOf(canine, poodle), true);
+      assertStrictEquals(isPrototypeOf(canine, poodle), true);
     },
 
     'It should identify a prototype two links removed.': function () {
@@ -93,7 +93,7 @@
       poodle.name = 'poodle';
       var goldenDoodle = Object.create(poodle);
       goldenDoodle.name = 'goldenDoodle';
-      eq(isPrototypeOf(canine, goldenDoodle), true);
+      assertStrictEquals(isPrototypeOf(canine, goldenDoodle), true);
     },
 
     'It should identify when two objects are unrelated by inheritance.': function () {
@@ -111,7 +111,7 @@
         }
       };
       
-      eq(isPrototypeOf(canine, feline), false);
+      assertStrictEquals(isPrototypeOf(canine, feline), false);
     },
   });
 </script>

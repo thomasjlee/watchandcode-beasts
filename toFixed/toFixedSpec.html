@@ -3,53 +3,56 @@
 <script>
   tests({
     'If precision is not provided, it should round numbers to a precision of 0.': function () {
-      eq(toFixed(123), '123');
-      eq(toFixed(123.4), '123');
-      eq(toFixed(123.45), '123');
-      eq(toFixed(1234.5), '1235');
-      eq(toFixed(1234.56), '1235');
+      assertStrictEquals(toFixed(123), '123');
+      assertStrictEquals(toFixed(123.4), '123');
+      assertStrictEquals(toFixed(123.45), '123');
+      assertStrictEquals(toFixed(1234.5), '1235');
+      assertStrictEquals(toFixed(1234.56), '1235');
     },
     'It should round numbers to a precision of 0.': function () {
-      eq(toFixed(123, 0), '123');
-      eq(toFixed(123.4, 0), '123');
-      eq(toFixed(123.45, 0), '123');
-      eq(toFixed(1234.5, 0), '1235');
-      eq(toFixed(1234.56, 0), '1235');
+      assertStrictEquals(toFixed(123, 0), '123');
+      assertStrictEquals(toFixed(123.4, 0), '123');
+      assertStrictEquals(toFixed(123.45, 0), '123');
+      assertStrictEquals(toFixed(1234.5, 0), '1235');
+      assertStrictEquals(toFixed(1234.56, 0), '1235');
     },
     'It should round numbers to a precision of 1.': function () {
-      eq(toFixed(123, 1), '123.0');
-      eq(toFixed(123.4, 1), '123.4');
-      eq(toFixed(1234.5, 1), '1234.5');
-      eq(toFixed(1234.56, 1), '1234.6');
+      assertStrictEquals(toFixed(123, 1), '123.0');
+      assertStrictEquals(toFixed(123.4, 1), '123.4');
+      assertStrictEquals(toFixed(1234.5, 1), '1234.5');
+      assertStrictEquals(toFixed(1234.56, 1), '1234.6');
     },
     'It should round numbers to a precision of 2.': function () {
-      eq(toFixed(123, 2), '123.00');
-      eq(toFixed(123.4, 2), '123.40');
-      eq(toFixed(1234.5, 2), '1234.50');
-      eq(toFixed(1234.56, 2), '1234.56');
-      eq(toFixed(1234.567, 2), '1234.57');
-      eq(toFixed(1234.5678, 2), '1234.57');
+      assertStrictEquals(toFixed(123, 2), '123.00');
+      assertStrictEquals(toFixed(123.4, 2), '123.40');
+      assertStrictEquals(toFixed(1234.5, 2), '1234.50');
+      assertStrictEquals(toFixed(1234.56, 2), '1234.56');
+      assertStrictEquals(toFixed(1234.567, 2), '1234.57');
+      assertStrictEquals(toFixed(1234.5678, 2), '1234.57');
     },
     'It should round numbers to a precision of 3.': function () {
-      eq(toFixed(123, 3), '123.000');
-      eq(toFixed(123.4, 3), '123.400');
-      eq(toFixed(123.45, 3), '123.450');
-      eq(toFixed(123.456, 3), '123.456');
-      eq(toFixed(123.4564, 3), '123.456');
-      eq(toFixed(123.4565, 3), '123.457');
-      eq(toFixed(123.4567, 3), '123.457');
+      assertStrictEquals(toFixed(123, 3), '123.000');
+      assertStrictEquals(toFixed(123.4, 3), '123.400');
+      assertStrictEquals(toFixed(123.45, 3), '123.450');
+      assertStrictEquals(toFixed(123.456, 3), '123.456');
+      assertStrictEquals(toFixed(123.4564, 3), '123.456');
+      assertStrictEquals(toFixed(123.4565, 3), '123.457');
+      assertStrictEquals(toFixed(123.4567, 3), '123.457');
+    },
+    'It should handle negative numbers.': function () {
+      fail();
     },
     'It should handle weird cases.': function () {
-      eq(toFixed(1.005, 2), '1.01');
-      eq(toFixed(0.615, 2), '0.62');
-      eq(toFixed(10.235, 2), '10.24');
+      assertStrictEquals(toFixed(1.005, 2), '1.01');
+      assertStrictEquals(toFixed(0.615, 2), '0.62');
+      assertStrictEquals(toFixed(10.235, 2), '10.24');
     },
     'If precision is anything but 0 or a positive number, it should default to 0.': function () {
-      eq(toFixed(234.56, {}), 235);
-      eq(toFixed(234.56, []), 235);
-      eq(toFixed(234.56, 'string'), 235);
-      eq(toFixed(234.56, null), 235);
-      eq(toFixed(234.56, undefined), 235);
+      assertStrictEquals(toFixed(234.56, {}), 235);
+      assertStrictEquals(toFixed(234.56, []), 235);
+      assertStrictEquals(toFixed(234.56, 'string'), 235);
+      assertStrictEquals(toFixed(234.56, null), 235);
+      assertStrictEquals(toFixed(234.56, undefined), 235);
     },
     'It should throw RangeError if precision is negative.': function () {
       var errorName;
@@ -60,7 +63,7 @@
         errorName = e.name;
       }
       
-      eq(errorName, 'RangeError');
+      assertStrictEquals(errorName, 'RangeError');
     },
     'It should throw TypeError if value is not a number.': function () {
       var errorName;
@@ -71,7 +74,7 @@
         errorName = e.name;
       }
 
-      eq(errorName, 'TypeError');
+      assertStrictEquals(errorName, 'TypeError');
     }
   });
 </script>
