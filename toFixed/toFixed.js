@@ -6,18 +6,17 @@ function toFixed(value, precision) {
   }
 
   var negative = '';
-  if (value.toString()[0] === '-') {
+  if (value < 0) {
     negative = '-';
     value = value.toString().replace(/-/, '');
   }
 
   if (!precision || !Number.isInteger(precision)) {
-    return negative + Math.round(value).toString();
+    return negative + Math.round(value);
   }
 
   var valueArray = value.toString().split('.');
 
-  // If value before the decimal is 0, reserve a '0' for padding.
   var zeroPad = '';
   if (parseInt(valueArray[0], 10) === 0) {
     zeroPad = '0';
@@ -28,7 +27,7 @@ function toFixed(value, precision) {
   if (decimal) {
     if (precision > decimal.length) {
       for (var i = 0; i < precision - decimal.length; i++) {
-        valueArray[1] = valueArray[1] + '0';
+        valueArray[1] += '0';
       }
     } else {
       var decimalArray = decimal.split('');
@@ -39,7 +38,7 @@ function toFixed(value, precision) {
     valueArray[1] = '';
 
     for (var i = 0; i < precision; i++) {
-      valueArray[1] = valueArray[1] + '0';
+      valueArray[1] += '0';
     }
   }
 
