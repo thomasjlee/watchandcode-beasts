@@ -1,16 +1,18 @@
 function toFixed(value, precision) {
   if (isNaN(value)) {
     throw new TypeError('toFixed() value argument must be a number');
-  }
-
-  if (precision < 0) {
+  } else if (precision < 0) {
     throw new RangeError('toFixed() precision argument must be 0 or greater');
   }
 
-  if (!precision) {
-    return Math.round(value)
-  } else if (!Number.isInteger(precision)) {
-    precision = 0;
+  var negative = '';
+  if (value.toString()[0] === '-') {
+    negative = '-';
+    value = value.toString().replace(/-/, '');
+  }
+
+  if (!precision || !Number.isInteger(precision)) {
+    return negative + Math.round(value).toString();
   }
 
   var valueArray = value.toString().split('.');
@@ -43,5 +45,5 @@ function toFixed(value, precision) {
 
   var roundedVal = Math.round(valueArray.join('')).toString();
   var nonDecimalLength = roundedVal.length - precision; 
-  return zeroPad + roundedVal.slice(0, nonDecimalLength) + '.' + roundedVal.slice(nonDecimalLength);
+  return negative + zeroPad + roundedVal.slice(0, nonDecimalLength) + '.' + roundedVal.slice(nonDecimalLength);
 };

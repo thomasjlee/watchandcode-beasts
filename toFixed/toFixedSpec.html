@@ -40,7 +40,15 @@
       assertStrictEquals(toFixed(123.4567, 3), '123.457');
     },
     'It should handle negative numbers.': function () {
-      fail();
+      assertStrictEquals(toFixed(-123, 0), '-123');
+      assertStrictEquals(toFixed(-123.4, 0), '-123');
+      assertStrictEquals(toFixed(-123.5, 0), '-124');
+      assertStrictEquals(toFixed(-234, 1), '-234.0');
+      assertStrictEquals(toFixed(-234.5, 1), '-234.5');
+      assertStrictEquals(toFixed(-234.54, 1), '-234.5');
+      assertStrictEquals(toFixed(-234.56, 1), '-234.6');
+      assertStrictEquals(toFixed(-234.564, 2), '-234.56');
+      assertStrictEquals(toFixed(-234.567, 2), '-234.57');
     },
     'It should handle weird cases.': function () {
       assertStrictEquals(toFixed(1.005, 2), '1.01');
@@ -48,11 +56,11 @@
       assertStrictEquals(toFixed(10.235, 2), '10.24');
     },
     'If precision is anything but 0 or a positive number, it should default to 0.': function () {
-      assertStrictEquals(toFixed(234.56, {}), 235);
-      assertStrictEquals(toFixed(234.56, []), 235);
-      assertStrictEquals(toFixed(234.56, 'string'), 235);
-      assertStrictEquals(toFixed(234.56, null), 235);
-      assertStrictEquals(toFixed(234.56, undefined), 235);
+      assertStrictEquals(toFixed(234.56, {}), '235');
+      assertStrictEquals(toFixed(234.56, []), '235');
+      assertStrictEquals(toFixed(234.56, 'string'), '235');
+      assertStrictEquals(toFixed(234.56, null), '235');
+      assertStrictEquals(toFixed(234.56, undefined), '235');
     },
     'It should throw RangeError if precision is negative.': function () {
       var errorName;
