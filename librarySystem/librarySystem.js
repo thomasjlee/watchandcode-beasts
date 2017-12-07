@@ -1,4 +1,6 @@
 (function () {
+  'use strict;'
+
   var libraryStorage = {};
 
   function librarySystem(libraryName, dependencies, callback) {
