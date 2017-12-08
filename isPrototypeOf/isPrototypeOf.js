@@ -1,13 +1,13 @@
 function isPrototypeOf(prototypeObj, object) {
   // error case: If first arg is null or undefined, throw TypeError.
-  if (prototypeObj === null || prototypeObj === undefined) {
+  if (!prototypeObj) {
     throw new TypeError(`prototypeObj cannot be ${prototypeObj}`);
   }
 
   // base case 1: If object is null or undefined, either
     // inputs were invalid or we've reached the end of the chain.
     // Return false.
-  if (object === null || object === undefined) {
+  if (!object) {
     return false;
 
   // base case 2: If the prototype is successfully matched, return true;
