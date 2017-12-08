@@ -7,7 +7,7 @@ function isPrototypeOf(prototypeObj, object) {
   // base case 1: If object is null or undefined, either
     // inputs were invalid or we've reached the end of the chain.
     // Return false.
-  if (!object) {
+  if (!object || typeof object !== 'object') {
     return false;
 
   // base case 2: If the prototype is successfully matched, return true;

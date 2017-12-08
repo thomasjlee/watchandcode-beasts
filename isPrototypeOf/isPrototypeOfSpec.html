@@ -51,6 +51,11 @@
       assertStrictEquals(isPrototypeOf(canine, undefined), false);     
     },
 
+    'It should return false when object is not an object.': function () {
+      assertStrictEquals(isPrototypeOf((Object.prototype), 'a string'), false);
+      assertStrictEquals(isPrototypeOf((Object.prototype), 123), false);
+    },
+
     'It should identify a direct prototype.': function () {
       var canine = {
         name: 'canine',
