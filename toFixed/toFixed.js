@@ -16,8 +16,8 @@ function toFixed(value, precision) {
   }
 
   var valueArray = value.toString().split('.');
-
   var zeroPad = '';
+
   if (parseInt(valueArray[0], 10) === 0) {
     zeroPad = '0';
   }
@@ -43,6 +43,15 @@ function toFixed(value, precision) {
   }
 
   var roundedVal = Math.round(valueArray.join('')).toString();
-  var nonDecimalLength = roundedVal.length - precision; 
-  return negative + zeroPad + roundedVal.slice(0, nonDecimalLength) + '.' + roundedVal.slice(nonDecimalLength);
+  var nonDecimalLength = roundedVal.length - precision;
+
+  if (nonDecimalLength >= 0) {
+    return negative + zeroPad + roundedVal.slice(0, nonDecimalLength) + '.' + roundedVal.slice(nonDecimalLength);
+  } else {
+    var zeroAfterDot = [];
+    for (var i = 0; i < Math.abs(nonDecimalLength); i++) {
+      zeroAfterDot.push('0');
+    }
+    return negative + zeroPad + '.' + zeroAfterDot.join('') + roundedVal.slice(nonDecimalLength);
+  }
 };

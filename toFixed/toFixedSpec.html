@@ -50,10 +50,22 @@
       assertStrictEquals(toFixed(-234.564, 2), '-234.56');
       assertStrictEquals(toFixed(-234.567, 2), '-234.57');
     },
+    'It should handle very small numbers (0 < x < 1)': function() {
+      assertStrictEquals(toFixed(0.4, 0), '0');
+      assertStrictEquals(toFixed(0.5, 0), '1');
+      assertStrictEquals(toFixed(0.04, 1), '0.0');
+      assertStrictEquals(toFixed(0.05, 1), '0.1');
+      assertStrictEquals(toFixed(0.004, 2), '0.00');
+      assertStrictEquals(toFixed(0.005, 2), '0.01');
+      assertStrictEquals(toFixed(0.014, 2), '0.01');
+      assertStrictEquals(toFixed(0.015, 2), '0.02');
+      assertStrictEquals(toFixed(0.0024, 3), '0.002');
+      assertStrictEquals(toFixed(0.0025, 3), '0.003');
+    },
     'It should handle weird cases.': function () {
-      assertStrictEquals(toFixed(1.005, 2), '1.01');
-      assertStrictEquals(toFixed(0.615, 2), '0.62');
-      assertStrictEquals(toFixed(10.235, 2), '10.24');
+      assertStrictEquals(toFixed(1.005, 2), '1.01'); // Issues with Number.prototype.toFixed: (1.005).toFixed(2) => '1.00'
+      assertStrictEquals(toFixed(0.615, 2), '0.62'); // (0.615).toFixed(2) => '0.61'
+      assertStrictEquals(toFixed(10.235, 2), '10.24'); // (10.235).toFixed(2) => '10.23'
     },
     'If precision is anything but 0 or a positive number, it should default to 0.': function () {
       assertStrictEquals(toFixed(234.56, {}), '235');
@@ -64,13 +76,13 @@
     },
     'It should throw RangeError if precision is negative.': function () {
       var errorName;
-      
+
       try {
         toFixed(123, -1);
       } catch (e) {
         errorName = e.name;
       }
-      
+
       assertStrictEquals(errorName, 'RangeError');
     },
     'It should throw TypeError if value is not a number.': function () {
